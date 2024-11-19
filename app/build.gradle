@@ -1,0 +1,30 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.j4rs_android_activity"
+        minSdk 29
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    // Include the j4rs to the apk
+    implementation 'io.github.astonbitecode:j4rs:0.21.0'
+}
