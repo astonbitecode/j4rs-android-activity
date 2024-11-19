@@ -28,3 +28,22 @@ dependencies {
     // Include the j4rs to the apk
     implementation 'io.github.astonbitecode:j4rs:0.21.0'
 }
+
+task buildRust {
+    doLast {
+        println("Building Rust native library")
+        exec {
+            workingDir './src/main/rust'
+            commandLine 'cargo', 'build', '--target=aarch64-linux-android', '--release'
+        }
+        println("Copying rust native library to app/src/main/jniLibs/arm64-v8a")
+        copy {
+            from "./src/main/rust/target/aarch64-linux-android/release"
+            into "./src/main/jniLibs/arm64-v8a"
+            include "libj4rs_android_activity.so"
+        }
+        println("Rust native library build completed")
+    }
+
+}
+build.dependsOn buildRust
