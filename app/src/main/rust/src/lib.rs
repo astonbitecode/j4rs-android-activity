@@ -8,7 +8,6 @@ fn android_main(app: AndroidApp) {
 }
 
 fn test(app: &AndroidApp) {
-    std::env::set_var("J4RS_CONSOLE_LOG_LEVEL", "debug");
     let java_vm: *mut JavaVM = app.vm_as_ptr().cast();
     let activity_obj: jobject = app.activity_as_ptr().cast();
     let jvm = JvmBuilder::new()
