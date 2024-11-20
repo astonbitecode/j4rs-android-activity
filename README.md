@@ -54,13 +54,21 @@ fn android_main(app: AndroidApp) {
     let activity_obj: jobject = app.activity_as_ptr().cast();
     let jvm = JvmBuilder::new()
         .with_java_vm(java_vm.clone())
-        .with_classloader_of_activity_(activity_obj.clone())
+        .with_classloader_of_activity(activity_obj.clone())
         .build()
         .unwrap();
 }
 ```
 
 You will be able to use `j4rs` as normal after this.
+
+Note that after the initial `Jvm` creation, new `Jvm` instances (eg. in new threads) can be created by just attaching to the thread:
+
+```rust
+std::thread::spawn(move || {
+    let other_jvm = Jvm::attach_thread().unwrap();
+}
+```
 
 * Build for the architecture you need. Eg., for `arm v8a`:
 
